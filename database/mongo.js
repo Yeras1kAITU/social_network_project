@@ -65,6 +65,7 @@ class MongoDBManager {
 
                 const samplePosts = [
                     {
+                        postId: 0,
                         title: 'Welcome to StudyConnect!',
                         content: 'This is our first post. Share your study materials, ask questions, and connect with fellow students!',
                         author: 'Admin',
@@ -75,6 +76,7 @@ class MongoDBManager {
                         is_published: true
                     },
                     {
+                        postId: 1,
                         title: 'JavaScript Async/Await Guide',
                         content: 'Complete guide to async/await in JavaScript with examples and best practices.',
                         author: 'Yerassyl Ibrayev',
@@ -85,6 +87,7 @@ class MongoDBManager {
                         is_published: true
                     },
                     {
+                        postId: 2,
                         title: 'Database Design Principles',
                         content: 'Learn about normalization, relationships, and optimization techniques for databases.',
                         author: 'Akbota Aitmukasheva',
@@ -95,6 +98,7 @@ class MongoDBManager {
                         is_published: true
                     },
                     {
+                        postId: 3,
                         title: 'React Hooks Tutorial',
                         content: 'Understanding useState, useEffect, and custom hooks with practical examples.',
                         author: 'Dayan Kulmagambetova',
@@ -105,6 +109,7 @@ class MongoDBManager {
                         is_published: true
                     },
                     {
+                        postId: 4,
                         title: 'Study Group Meeting - Friday',
                         content: 'Weekly study group meeting for Backend Development course. Bring your questions!',
                         author: 'SE-2425 Group',
