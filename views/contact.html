@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Contact Us</h1>
+            <p class="tagline">
+                Have questions, suggestions, or want to collaborate? We'd love to hear from you!
+            </p>
+        </section>
+
+        <section class="team-section">
+            <div class="contact-container" style="max-width: 800px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                    <div class="contact-info" style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                        <h3 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-envelope" style="color: var(--accent-color);"></i> Email
+                        </h3>
+                        <p style="color: var(--text-secondary);">242613@astanait.edu.kz</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                            We typically respond within 2.5 years
+                        </p>
+                    </div>
+                    <div class="contact-info" style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                        <h3 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--accent-color);"></i> Location
+                        </h3>
+                        <p style="color: var(--text-secondary);">Astana IT University</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                            Astana, Kazakhstan
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-container" style="background: var(--card-bg); padding: 2.5rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                    <h2 style="margin-bottom: 2rem; text-align: center;">Send us a Message</h2>
+
+                    <form id="contactForm" action="/contact" method="POST" onsubmit="return validateForm()">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="name" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                <i class="fas fa-user"></i> Full Name *
+                            </label>
+                            <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    required
+                                    placeholder="Enter your full name"
+                                    style="width: 100%; padding: 1rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: var(--transition);"
+                                    onfocus="this.style.borderColor='var(--text-primary)';"
+                                    onblur="this.style.borderColor='var(--card-border)';"
+                            >
+                            <div id="nameError" style="color: #f87171; font-size: 0.875rem; margin-top: 0.5rem; display: none;">
+                                Please enter your name
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="email" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                <i class="fas fa-envelope"></i> Email Address *
+                            </label>
+                            <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    placeholder="your.email@example.com"
+                                    style="width: 100%; padding: 1rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: var(--transition);"
+                                    onfocus="this.style.borderColor='var(--text-primary)';"
+                                    onblur="this.style.borderColor='var(--card-border)';"
+                            >
+                            <div id="emailError" style="color: #f87171; font-size: 0.875rem; margin-top: 0.5rem; display: none;">
+                                Please enter a valid email address
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label for="message" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                <i class="fas fa-comment"></i> Your Message *
+                            </label>
+                            <textarea
+                                    id="message"
+                                    name="message"
+                                    rows="6"
+                                    required
+                                    placeholder="Tell us what's on your mind..."
+                                    style="width: 100%; padding: 1rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary); font-size: 1rem; resize: vertical; transition: var(--transition); font-family: inherit;"
+                                    onfocus="this.style.borderColor='var(--text-primary)';"
+                                    onblur="this.style.borderColor='var(--card-border)';"
+                            ></textarea>
+                            <div id="messageError" style="color: #f87171; font-size: 0.875rem; margin-top: 0.5rem; display: none;">
+                                Please enter your message
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <button
+                                    type="submit"
+                                    style="background: var(--text-primary); color: var(--dark-bg); border: none; padding: 1rem 3rem; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 0.75rem;"
+                                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--shadow-md)';"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';"
+                            >
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </div>
+
+                        <p style="text-align: center; color: var(--text-muted); margin-top: 1.5rem; font-size: 0.9rem;">
+                            * Required fields
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/Yeras1kAITU/social_network" target="_blank" class="social-link">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://discord.gg" target="_blank" class="social-link">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+            <a href="https://t.me/yeras1k" target="_blank" class="social-link">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="mailto:242613@astanait.edu.kz" class="social-link">
+                <i class="fas fa-envelope"></i> Contact
+            </a>
+        </div>
+        <p>© 2025 StudyConnect - Social Network for Students</p>
+        <p>Created for Backend Development Course | Astana IT University</p>
+    </footer>
+</div>
+
+<script>
+    function validateForm() {
+        let isValid = true;
+
+        document.querySelectorAll('[id$="Error"]').forEach(el => {
+            el.style.display = 'none';
+        });
+
+        const name = document.getElementById('name').value.trim();
+        if (!name) {
+            document.getElementById('nameError').style.display = 'block';
+            isValid = false;
+        }
+
+        const email = document.getElementById('email').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+            document.getElementById('emailError').style.display = 'block';
+            isValid = false;
+        }
+
+        const message = document.getElementById('message').value.trim();
+        if (!message) {
+            document.getElementById('messageError').style.display = 'block';
+            isValid = false;
+        }
+
+        if (isValid) {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+        }
+
+        return isValid;
+    }
+
+    window.addEventListener('beforeunload', function (e) {
+        const form = document.getElementById('contactForm');
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        if ((name || email || message) && !formSubmitted) {
+            e.preventDefault();
+            e.returnValue = 'У вас есть несохранённые изменения. Вы уверены, что хотите покинуть страницу?';
+        }
+    });
+
+    let formSubmitted = false;
+
+    document.getElementById('contactForm').addEventListener('submit', function() {
+        formSubmitted = true;
+    });
+
+    document.getElementById('name').addEventListener('input', function() {
+        if (this.value.trim()) {
+            document.getElementById('nameError').style.display = 'none';
+        }
+    });
+
+    document.getElementById('email').addEventListener('input', function() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (this.value.trim() && emailRegex.test(this.value)) {
+            document.getElementById('emailError').style.display = 'none';
+        }
+    });
+
+    document.getElementById('message').addEventListener('input', function() {
+        if (this.value.trim()) {
+            document.getElementById('messageError').style.display = 'none';
+        }
+    });
+</script>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if(targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        const currentPath = window.location.pathname;
+
+        const loggedInPages = ['/search', '/api-docs', '/login'];
+        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
+
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            if (shouldShowLoggedIn) {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
+                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
+                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                `;
+
+                if (!isLoggedIn && currentPath !== '/login') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                }
+            } else {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                `;
+            }
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem('isLoggedIn');
+    }
+</script>
+</body>
+</html>

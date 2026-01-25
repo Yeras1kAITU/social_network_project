@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyConnect - Social Network for Students</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>StudyConnect</h1>
+            <p class="tagline">
+                The premier social network designed exclusively for students.
+                Connect with classmates, share study materials, form study groups,
+                and build your academic network in a secure, student-focused environment.
+            </p>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Students Connected</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Groups</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">0%</span>
+                    <span class="stat-label">Academic Support</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="team-section">
+            <h2 class="section-title">Development Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <h3>Yerassyl Ibrayev</h3>
+                    <span class="role"><i class="fas fa-server"></i> Backend Lead</span>
+                    <p><i class="fas fa-graduation-cap"></i> Group: SE-2425</p>
+                    <p><i class="fas fa-university"></i> Astana IT University</p>
+                    <p><i class="fas fa-code"></i> Node.js, Express, Databases</p>
+                </div>
+                <div class="team-member">
+                    <h3>Dayan Kulmagambetova</h3>
+                    <span class="role"><i class="fas fa-paint-brush"></i> Frontend Developer</span>
+                    <p><i class="fas fa-graduation-cap"></i> Group: SE-2425</p>
+                    <p><i class="fas fa-university"></i> Astana IT University</p>
+                    <p><i class="fas fa-code"></i> React, JavaScript, UI/UX</p>
+                </div>
+                <div class="team-member">
+                    <h3>Akbota Aitmukasheva</h3>
+                    <span class="role"><i class="fas fa-database"></i> Database Architect</span>
+                    <p><i class="fas fa-graduation-cap"></i> Group: SE-2425</p>
+                    <p><i class="fas fa-university"></i> Astana IT University</p>
+                    <p><i class="fas fa-code"></i> MongoDB, PostgreSQL, Redis</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <h2 class="section-title">Development Roadmap</h2>
+            <div class="roadmap-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-week">1</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-rocket"></i> Project Foundation</h4>
+                        <p>Express.js server setup, project structure, landing page with team information and basic styling.</p>
+                        <span class="feature-tag"><i class="fas fa-check-circle"></i> COMPLETED</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">2</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-user-graduate"></i> Student Authentication & Forms</h4>
+                        <p>Student registration/login forms with POST route handling, contact form implementation, and backend processing.</p>
+                        <span class="feature-tag"><i class="fas fa-check-circle"></i> COMPLETED</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">3</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-database"></i> Database Integration</h4>
+                        <p>MongoDB setup for student profiles, courses, and study groups with efficient data modeling.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">4</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-users"></i> Study Groups & Connections</h4>
+                        <p>Create/join study groups, add classmates, and manage academic connections.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">5</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-file-upload"></i> Resource Sharing</h4>
+                        <p>Upload and share study materials, lecture notes, and assignments with group members.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">6</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-comments"></i> Real-time Chat</h4>
+                        <p>Integrated chat system for study groups with file sharing and video call capabilities.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">7</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-calendar-alt"></i> Academic Calendar</h4>
+                        <p>Shared calendar for assignment deadlines, exam schedules, and study sessions.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-week">8</div>
+                    <div class="timeline-content">
+                        <h4><i class="fas fa-cloud-upload-alt"></i> Deployment & Launch</h4>
+                        <p>Cloud deployment, performance optimization, and official launch for university students.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="api-test" class="api-section" style="background: var(--dark-bg); padding: 3rem 2rem; border-radius: var(--border-radius); margin: 3rem 0;">
+            <h2 class="section-title">Database API Test</h2>
+            <p class="section-subtitle" style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Test our new database integration with these direct links:
+            </p>
+
+            <div class="api-links" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                <div class="api-card" style="background: var(--card-bg); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">
+                        <i class="fas fa-database"></i> Get All Posts
+                    </h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        View all study posts from the database
+                    </p>
+                    <a href="/api/posts" class="api-link" style="display: inline-block; color: var(--text-primary); text-decoration: none; font-weight: 500;">
+                        <code>/api/posts</code> →
+                    </a>
+                </div>
+
+                <div class="api-card" style="background: var(--card-bg); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">
+                        <i class="fas fa-file-alt"></i> Get Post #1
+                    </h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        View a specific post by ID
+                    </p>
+                    <a href="/api/posts/1" class="api-link" style="display: inline-block; color: var(--text-primary); text-decoration: none; font-weight: 500;">
+                        <code>/api/posts/1</code> →
+                    </a>
+                </div>
+
+                <div class="api-card" style="background: var(--card-bg); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">
+                        <i class="fas fa-chart-bar"></i> Get Statistics
+                    </h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        View post statistics and categories
+                    </p>
+                    <a href="/api/posts/stats" class="api-link" style="display: inline-block; color: var(--text-primary); text-decoration: none; font-weight: 500;">
+                        <code>/api/posts/stats</code> →
+                    </a>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: rgba(56, 178, 172, 0.1); border-radius: 8px; border: 1px solid rgba(56, 178, 172, 0.2);">
+                <p style="color: var(--accent-color); margin-bottom: 0.5rem;">
+                    <i class="fas fa-info-circle"></i> Try these API endpoints with tools like Postman or curl
+                </p>
+                <pre style="background: var(--dark-bg); padding: 1rem; border-radius: 8px; overflow-x: auto; text-align: left; font-size: 0.9rem; color: var(--text-secondary);">
+# Create a new post
+curl -X POST http://localhost:3000/api/posts \
+  -H "Content-Type: application/json" \
+  -d '{"title":"New Study Material","content":"Content here","author":"Test User"}'
+
+# Update post #1
+curl -X PUT http://localhost:3000/api/posts/1 \
+  -H "Content-Type: application/json" \
+  -d '{"likes":50}'
+        </pre>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2 class="cta-title">Ready to Join Our Community?</h2>
+            <p class="cta-subtitle">
+                Connect with fellow students, share resources, and enhance your learning experience.
+                Have questions? We're here to help!
+            </p>
+            <div class="cta-buttons">
+                <a href="/contact" class="cta-button primary">
+                    <i class="fas fa-envelope"></i> Contact Us
+                </a>
+                <a href="/about" class="cta-button secondary">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/Yeras1kAITU/social_network" target="_blank" class="social-link">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://discord.gg" target="_blank" class="social-link">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+            <a href="https://t.me/yeras1k" target="_blank" class="social-link">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="mailto:242613@astanait.edu.kz" class="social-link">
+                <i class="fas fa-envelope"></i> Contact
+            </a>
+        </div>
+        <p>© 2025 StudyConnect - Social Network for Students</p>
+        <p>Created for Backend Development Course | Astana IT University</p>
+        <p style="margin-top: 15px; font-size: 0.9rem; color: #64748b;">
+            <i class="fas fa-shield-alt"></i> Privacy-focused ·
+            <i class="fas fa-graduation-cap"></i> Student-only ·
+            <i class="fas fa-heart"></i> Made by students, for students
+        </p>
+    </footer>
+</div>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if(targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.team-member, .timeline-item, .stat-item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(el);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            if (currentPath === linkPath || (currentPath === '/' && linkPath === '/')) {
+                link.style.color = 'var(--text-primary)';
+                link.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        const currentPath = window.location.pathname;
+
+        const loggedInPages = ['/search', '/api-docs', '/login'];
+        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
+
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            if (shouldShowLoggedIn) {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
+                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
+                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                `;
+
+                if (!isLoggedIn && currentPath !== '/login') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                }
+            } else {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                `;
+            }
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem('isLoggedIn');
+    }
+</script>
+</body>
+</html>

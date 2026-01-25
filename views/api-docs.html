@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>API Documentation</h1>
+            <p class="tagline">
+                Complete reference for StudyConnect Posts API. Create, read, update, and delete study posts.
+            </p>
+        </section>
+
+        <section class="team-section">
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border); margin-bottom: 2rem;">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--text-primary);">
+                        <i class="fas fa-database"></i> Database Information
+                    </h2>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                        <div>
+                            <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">Database</h3>
+                            <p style="color: var(--text-secondary);">SQLite (studyconnect.db)</p>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">Table</h3>
+                            <p style="color: var(--text-secondary);">posts</p>
+                        </div>
+                        <div>
+                            <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">Auto-initialized</h3>
+                            <p style="color: var(--text-secondary);">On server startup</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; background: var(--dark-bg); padding: 1.5rem; border-radius: 8px;">
+                        <h4 style="margin-bottom: 1rem;">Table Schema</h4>
+                        <pre style="color: var(--text-secondary); font-family: monospace; overflow: auto; font-size: 0.9rem;">
+CREATE TABLE posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    author TEXT NOT NULL,
+    category TEXT DEFAULT 'general',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    likes INTEGER DEFAULT 0,
+    is_published BOOLEAN DEFAULT 1
+)</pre>
+                    </div>
+                </div>
+
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border); margin-bottom: 2rem;">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--text-primary);">
+                        <i class="fas fa-exchange-alt"></i> API Endpoints
+                    </h2>
+
+                    <div class="endpoint-card" style="border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <span style="background: #10b981; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-weight: 600; font-size: 0.9rem;">
+                                GET
+                            </span>
+                            <code style="background: var(--dark-bg); padding: 0.5rem 1rem; border-radius: 4px; font-size: 1rem;">
+                                /api/posts
+                            </code>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            Retrieve all posts. Supports query parameters for filtering.
+                        </p>
+                        <a href="/api/posts" class="cta-button secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                            Test Endpoint
+                        </a>
+                    </div>
+                </div>
+
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                    <h2 style="margin-bottom: 1.5rem; color: var(--text-primary);">
+                        <i class="fas fa-vial"></i> Quick Tests
+                    </h2>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                        <a href="/api/posts" class="api-test-card" style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; text-decoration: none; color: var(--text-primary); text-align: center;">
+                            <i class="fas fa-list" style="font-size: 2rem; margin-bottom: 1rem; color: var(--accent-color);"></i>
+                            <h3>All Posts</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">View all study posts</p>
+                        </a>
+
+                        <a href="/api/posts/1" class="api-test-card" style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; text-decoration: none; color: var(--text-primary); text-align: center;">
+                            <i class="fas fa-file-alt" style="font-size: 2rem; margin-bottom: 1rem; color: var(--accent-color);"></i>
+                            <h3>Post #1</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">View single post</p>
+                        </a>
+
+                        <a href="/api/posts/categories" class="api-test-card" style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; text-decoration: none; color: var(--text-primary); text-align: center;">
+                            <i class="fas fa-tags" style="font-size: 2rem; margin-bottom: 1rem; color: var(--accent-color);"></i>
+                            <h3>Categories</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">View all categories</p>
+                        </a>
+
+                        <a href="/api/posts/stats" class="api-test-card" style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; text-decoration: none; color: var(--text-primary); text-align: center;">
+                            <i class="fas fa-chart-bar" style="font-size: 2rem; margin-bottom: 1rem; color: var(--accent-color);"></i>
+                            <h3>Statistics</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">View post stats</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>2025 StudyConnect - Social Network for Students</p>
+        <p>Database: MongoDB | Created for Backend Development Course</p>
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        const currentPath = window.location.pathname;
+
+        const loggedInPages = ['/search', '/api-docs', '/login'];
+        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
+
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            if (shouldShowLoggedIn) {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
+                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
+                    <li><a href="/api-docs" ${currentPath === '/api-docs' ? 'class="active"' : ''}><i class="fas fa-code"></i> API Docs</a></li>
+                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                `;
+
+                if (!isLoggedIn && currentPath !== '/login') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                }
+            } else {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                `;
+            }
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem('isLoggedIn');
+    }
+</script>
+</body>
+</html>

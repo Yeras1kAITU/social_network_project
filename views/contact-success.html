@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="padding: 100px 2rem; text-align: center;">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div style="background: var(--card-bg); padding: 3rem; border-radius: var(--border-radius); border: 2px solid var(--success-color); margin-bottom: 2rem;">
+                <div style="font-size: 5rem; color: var(--success-color); margin-bottom: 2rem;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+
+                <h1 style="font-size: 3rem; margin-bottom: 1.5rem; color: var(--text-primary);">
+                    Success!
+                </h1>
+
+                <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6;">
+                    Your message has been received successfully and saved to our database.
+                    We will get back to you as soon as possible.
+                </p>
+
+                <div style="background: rgba(72, 187, 120, 0.1); padding: 1rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid rgba(72, 187, 120, 0.2);">
+                    <p style="color: var(--success-color); margin: 0;">
+                        <i class="fas fa-database"></i> Data has been saved to <code>messages.json</code>
+                    </p>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="/" class="cta-button primary">
+                    <i class="fas fa-home"></i> Return to Home
+                </a>
+                <a href="/contact" class="cta-button secondary">
+                    <i class="fas fa-envelope"></i> Send Another Message
+                </a>
+                <a href="/api/info" class="cta-button secondary">
+                    <i class="fas fa-code"></i> View API Info
+                </a>
+            </div>
+
+            <div style="margin-top: 3rem; color: var(--text-muted);">
+                <p>Try our other features:</p>
+                <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                    <a href="/search?q=students" style="color: var(--accent-color); text-decoration: none;">
+                        <i class="fas fa-search"></i> Search students
+                    </a>
+                    <a href="/item/SE-2425" style="color: var(--accent-color); text-decoration: none;">
+                        <i class="fas fa-users"></i> View group SE-2425
+                    </a>
+                    <a href="/about" style="color: var(--accent-color); text-decoration: none;">
+                        <i class="fas fa-info-circle"></i> About our team
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 StudyConnect - Social Network for Students</p>
+        <p>Form submission successful at <span id="timestamp"></span></p>
+    </footer>
+</div>
+
+<script>
+    document.getElementById('timestamp').textContent = new Date().toLocaleString();
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if(targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        const currentPath = window.location.pathname;
+
+        const loggedInPages = ['/search', '/api-docs', '/login'];
+        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
+
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            if (shouldShowLoggedIn) {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
+                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
+                    <li><a href="/api-docs" ${currentPath === '/api-docs' ? 'class="active"' : ''}><i class="fas fa-code"></i> API Docs</a></li>
+                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                `;
+
+                if (!isLoggedIn && currentPath !== '/login') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                }
+            } else {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                `;
+            }
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem('isLoggedIn');
+    }
+</script>
+</body>
+</html>

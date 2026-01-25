@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Operations - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/search"><i class="fas fa-search"></i> Search</a></li>
+                <li><a href="/crud" class="active"><i class="fas fa-database"></i> CRUD</a></li>
+                <li><a href="/logout" class="btn-exit"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>CRUD Operations</h1>
+            <p class="tagline">
+                Manage posts directly from this interface. Create, Read, Update, and Delete posts in the StudyConnect database.
+            </p>
+        </section>
+
+        <section id="crud-interface" class="crud-section" style="background: var(--dark-bg); padding: 3rem 2rem; border-radius: var(--border-radius); margin: 3rem 0;">
+            <h2 class="section-title">Post Management</h2>
+            <p class="section-subtitle" style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Create, Read, Update, and Delete posts directly from this interface
+            </p>
+
+            <div class="crud-container" style="max-width: 1200px; margin: 0 auto;">
+                <div class="crud-card" style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border); margin-bottom: 2rem;">
+                    <h3 style="color: var(--accent-color); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fas fa-plus-circle"></i> Create New Post
+                    </h3>
+
+                    <form id="createPostForm" class="post-form">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <label for="createTitle" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                    Title *
+                                </label>
+                                <input type="text" id="createTitle" name="title" required
+                                       placeholder="Enter post title"
+                                       style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary);">
+                            </div>
+
+                            <div>
+                                <label for="createAuthor" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                    Author *
+                                </label>
+                                <input type="text" id="createAuthor" name="author" required
+                                       placeholder="Enter author name"
+                                       style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary);">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label for="createCategory" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                Category
+                            </label>
+                            <select id="createCategory" name="category"
+                                    style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary);">
+                                <option value="general">General</option>
+                                <option value="programming">Programming</option>
+                                <option value="database">Database</option>
+                                <option value="frontend">Frontend</option>
+                                <option value="study-group">Study Group</option>
+                                <option value="announcement">Announcement</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label for="createContent" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                Content *
+                            </label>
+                            <textarea id="createContent" name="content" rows="4" required
+                                      placeholder="Enter post content"
+                                      style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary); resize: vertical;"></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="submit" class="cta-button primary" style="flex: 1;">
+                                <i class="fas fa-paper-plane"></i> Create Post
+                            </button>
+                            <button type="button" onclick="clearCreateForm()" class="cta-button secondary" style="flex: 0.5;">
+                                <i class="fas fa-times"></i> Clear
+                            </button>
+                        </div>
+
+                        <div id="createResponse" style="margin-top: 1rem;"></div>
+                    </form>
+                </div>
+
+                <div class="crud-card" style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                        <h3 style="color: var(--accent-color); margin: 0; display: flex; align-items: center; gap: 0.75rem;">
+                            <i class="fas fa-database"></i> Manage Posts
+                        </h3>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <button onclick="loadAllPosts()" class="cta-button secondary">
+                                <i class="fas fa-sync-alt"></i> Refresh Posts
+                            </button>
+                            <button onclick="showAllPosts()" class="cta-button primary">
+                                <i class="fas fa-eye"></i> View All
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <input type="text" id="searchPostId" placeholder="Enter Post ID to search"
+                                   style="flex: 1; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary);">
+                            <button onclick="searchPostById()" class="cta-button primary">
+                                <i class="fas fa-search"></i> Search by ID
+                            </button>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <input type="text" id="searchPostQuery" placeholder="Search by title, author, or category"
+                                   style="flex: 2; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary); min-width: 250px;">
+                            <select id="searchCategory"
+                                    style="flex: 1; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary); min-width: 150px;">
+                                <option value="">All Categories</option>
+                                <option value="general">General</option>
+                                <option value="programming">Programming</option>
+                                <option value="database">Database</option>
+                                <option value="frontend">Frontend</option>
+                                <option value="study-group">Study Group</option>
+                                <option value="announcement">Announcement</option>
+                            </select>
+                            <button onclick="searchPosts()" class="cta-button secondary">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="postsContainer" style="margin-bottom: 2rem;">
+                        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                            <i class="fas fa-database" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                            <p>No posts loaded. Click "Refresh Posts" to load posts from the database.</p>
+                        </div>
+                    </div>
+
+                    <div id="updateFormContainer" style="display: none; background: rgba(56, 178, 172, 0.1); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(56, 178, 172, 0.2); margin-top: 2rem;">
+                        <h4 style="color: var(--accent-color); margin-bottom: 1rem;">
+                            <i class="fas fa-edit"></i> Update Post
+                        </h4>
+
+                        <form id="updatePostForm" class="post-form">
+                            <input type="hidden" id="updatePostId" name="id">
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                                <div>
+                                    <label for="updateTitle" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                        Title
+                                    </label>
+                                    <input type="text" id="updateTitle" name="title"
+                                           placeholder="Enter new title"
+                                           style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary);">
+                                </div>
+
+                                <div>
+                                    <label for="updateLikes" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                        Likes
+                                    </label>
+                                    <input type="number" id="updateLikes" name="likes" min="0"
+                                           placeholder="Enter likes count"
+                                           style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary);">
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 1.5rem;">
+                                <label for="updateCategory" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                    Category
+                                </label>
+                                <select id="updateCategory" name="category"
+                                        style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary);">
+                                    <option value="">Keep current</option>
+                                    <option value="general">General</option>
+                                    <option value="programming">Programming</option>
+                                    <option value="database">Database</option>
+                                    <option value="frontend">Frontend</option>
+                                    <option value="study-group">Study Group</option>
+                                    <option value="announcement">Announcement</option>
+                                </select>
+                            </div>
+
+                            <div style="margin-bottom: 1.5rem;">
+                                <label for="updateContent" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                                    Content
+                                </label>
+                                <textarea id="updateContent" name="content" rows="3"
+                                          placeholder="Enter new content (leave empty to keep current)"
+                                          style="width: 100%; padding: 0.75rem; background: var(--dark-bg); border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-primary); resize: vertical;"></textarea>
+                            </div>
+
+                            <div style="display: flex; gap: 1rem;">
+                                <button type="submit" class="cta-button primary" style="flex: 1;">
+                                    <i class="fas fa-save"></i> Update Post
+                                </button>
+                                <button type="button" onclick="hideUpdateForm()" class="cta-button secondary" style="flex: 0.5;">
+                                    <i class="fas fa-times"></i> Cancel
+                                </button>
+                            </div>
+
+                            <div id="updateResponse" style="margin-top: 1rem;"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/Yeras1kAITU/social_network" target="_blank" class="social-link">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://discord.gg" target="_blank" class="social-link">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+            <a href="https://t.me/yeras1k" target="_blank" class="social-link">
+                <i class="fab fa-telegram"></i> Telegram
+            </a>
+            <a href="mailto:242613@astanait.edu.kz" class="social-link">
+                <i class="fas fa-envelope"></i> Contact
+            </a>
+        </div>
+        <p>© 2025 StudyConnect - Social Network for Students</p>
+        <p>Database Management Interface | MongoDB CRUD Operations</p>
+    </footer>
+</div>
+
+<script>
+    async function loadAllPosts() {
+        try {
+            showLoading('postsContainer', 'Loading posts...');
+            const response = await fetch('/api/posts');
+            const result = await response.json();
+
+            if (result.success) {
+                displayPosts(result.data);
+            } else {
+                showError('postsContainer', 'Failed to load posts: ' + result.error);
+            }
+        } catch (error) {
+            showError('postsContainer', 'Error loading posts: ' + error.message);
+        }
+    }
+
+    function displayPosts(posts) {
+        const container = document.getElementById('postsContainer');
+
+        if (!posts || posts.length === 0) {
+            container.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <p>No posts found in the database.</p>
+            </div>
+        `;
+            return;
+        }
+
+        container.innerHTML = `
+        <div style="margin-bottom: 1rem; color: var(--text-secondary);">
+            <i class="fas fa-info-circle"></i> Showing ${posts.length} posts
+        </div>
+        <div style="display: grid; gap: 1rem;">
+            ${posts.map(post => `
+                <div class="post-card" style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h4 style="margin: 0 0 0.5rem 0; color: var(--text-primary);">${post.title}</h4>
+                            <div style="display: flex; gap: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                                <span><i class="fas fa-user"></i> ${post.author}</span>
+                                <span><i class="fas fa-tag"></i> ${post.category}</span>
+                                <span><i class="fas fa-heart"></i> ${post.likes} likes</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="showUpdateForm('${post.postId}')" class="action-btn edit" style="background: #38b2ac; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button onclick="deletePost('${post.postId}', '${post.title}')" class="action-btn delete" style="background: #f87171; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.5;">
+                        ${post.content.length > 150 ? post.content.substring(0, 150) + '...' : post.content}
+                    </p>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 0.9rem;">
+                        <div>
+                            <span><i class="fas fa-id-card"></i> ID: ${post.postId}</span>
+                            <span style="margin-left: 1rem;"><i class="fas fa-calendar"></i> ${new Date(post.created_at).toLocaleDateString()}</span>
+                        </div>
+                        <a href="/api/posts/${post.postId}" target="_blank" style="color: var(--accent-color); text-decoration: none;">
+                            View Details <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    }
+
+    async function showAllPosts() {
+        try {
+            showLoading('postsContainer', 'Loading all posts...');
+            const response = await fetch('/api/posts?limit=100');
+            const result = await response.json();
+
+            if (result.success) {
+                displayPosts(result.data);
+            } else {
+                showError('postsContainer', 'Failed to load posts: ' + result.error);
+            }
+        } catch (error) {
+            showError('postsContainer', 'Error loading posts: ' + error.message);
+        }
+    }
+
+    async function searchPostById() {
+        const postId = document.getElementById('searchPostId').value.trim();
+
+        if (!postId) {
+            alert('Please enter a Post ID');
+            return;
+        }
+
+        try {
+            showLoading('postsContainer', `Searching for post ID: ${postId}...`);
+            const response = await fetch(`/api/posts/${postId}`);
+            const result = await response.json();
+
+            if (result.success) {
+                displayPosts([result.data]);
+            } else {
+                showError('postsContainer', result.error || 'Post not found');
+            }
+        } catch (error) {
+            showError('postsContainer', 'Error searching post: ' + error.message);
+        }
+    }
+
+    async function searchPosts() {
+        const query = document.getElementById('searchPostQuery').value.trim();
+        const category = document.getElementById('searchCategory').value;
+
+        let url = '/api/posts?';
+        const params = [];
+
+        if (query) {
+            params.push(`title=${encodeURIComponent(query)}`);
+        }
+
+        if (category) {
+            params.push(`category=${encodeURIComponent(category)}`);
+        }
+
+        url += params.join('&');
+
+        try {
+            showLoading('postsContainer', 'Searching posts...');
+            const response = await fetch(url);
+            const result = await response.json();
+
+            if (result.success) {
+                displayPosts(result.data);
+            } else {
+                showError('postsContainer', 'Search failed: ' + result.error);
+            }
+        } catch (error) {
+            showError('postsContainer', 'Error searching: ' + error.message);
+        }
+    }
+
+    document.getElementById('createPostForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = {
+            title: document.getElementById('createTitle').value,
+            content: document.getElementById('createContent').value,
+            author: document.getElementById('createAuthor').value,
+            category: document.getElementById('createCategory').value
+        };
+
+        if (formData.title.length < 3 || formData.title.length > 200) {
+            showResponse('createResponse', 'Title must be between 3 and 200 characters', 'error');
+            return;
+        }
+
+        if (formData.content.length < 10) {
+            showResponse('createResponse', 'Content must be at least 10 characters', 'error');
+            return;
+        }
+
+        if (!formData.author.trim()) {
+            showResponse('createResponse', 'Author is required', 'error');
+            return;
+        }
+
+        try {
+            showResponse('createResponse', 'Creating post...', 'loading');
+
+            const response = await fetch('/api/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showResponse('createResponse', 'Post created successfully!', 'success');
+                clearCreateForm();
+                loadAllPosts();
+            } else {
+                showResponse('createResponse', 'Error: ' + result.error, 'error');
+            }
+        } catch (error) {
+            showResponse('createResponse', 'Error creating post: ' + error.message, 'error');
+        }
+    });
+
+    function clearCreateForm() {
+        document.getElementById('createPostForm').reset();
+        document.getElementById('createResponse').innerHTML = '';
+    }
+
+    async function showUpdateForm(postId) {
+        try {
+            showResponse('updateResponse', 'Loading post data...', 'loading');
+
+            const response = await fetch(`/api/posts/${postId}`);
+            const result = await response.json();
+
+            if (result.success) {
+                const post = result.data;
+
+                document.getElementById('updatePostId').value = post.postId;
+                document.getElementById('updateTitle').value = post.title;
+                document.getElementById('updateLikes').value = post.likes;
+                document.getElementById('updateCategory').value = post.category;
+                document.getElementById('updateContent').value = post.content;
+
+                document.getElementById('updateFormContainer').style.display = 'block';
+                showResponse('updateResponse', 'Ready to update post', 'info');
+
+                document.getElementById('updateFormContainer').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                showResponse('updateResponse', 'Error loading post: ' + result.error, 'error');
+            }
+        } catch (error) {
+            showResponse('updateResponse', 'Error: ' + error.message, 'error');
+        }
+    }
+
+    function hideUpdateForm() {
+        document.getElementById('updateFormContainer').style.display = 'none';
+        document.getElementById('updateResponse').innerHTML = '';
+    }
+
+    document.getElementById('updatePostForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const postId = document.getElementById('updatePostId').value;
+        const updateData = {};
+
+        const title = document.getElementById('updateTitle').value.trim();
+        const likes = document.getElementById('updateLikes').value.trim();
+        const category = document.getElementById('updateCategory').value;
+        const content = document.getElementById('updateContent').value.trim();
+
+        if (title) updateData.title = title;
+        if (likes) updateData.likes = parseInt(likes);
+        if (category) updateData.category = category;
+        if (content) updateData.content = content;
+
+        if (Object.keys(updateData).length === 0) {
+            showResponse('updateResponse', 'No changes to update', 'warning');
+            return;
+        }
+
+        try {
+            showResponse('updateResponse', 'Updating post...', 'loading');
+
+            const response = await fetch(`/api/posts/${postId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updateData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showResponse('updateResponse', 'Post updated successfully!', 'success');
+                loadAllPosts();
+                setTimeout(hideUpdateForm, 2000);
+            } else {
+                showResponse('updateResponse', 'Error: ' + result.error, 'error');
+            }
+        } catch (error) {
+            showResponse('updateResponse', 'Error updating post: ' + error.message, 'error');
+        }
+    });
+
+    async function deletePost(postId, postTitle) {
+        if (!confirm(`Are you sure you want to delete post: "${postTitle}"?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/posts/${postId}`, {
+                method: 'DELETE'
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('Post deleted successfully!');
+                loadAllPosts();
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {
+            alert('Error deleting post: ' + error.message);
+        }
+    }
+
+    function showLoading(containerId, message) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = `
+        <div style="text-align: center; padding: 2rem;">
+            <div class="loading-spinner" style="border: 4px solid rgba(255,255,255,0.1); border-radius: 50%; border-top: 4px solid var(--accent-color); width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+            <p style="color: var(--text-secondary);">${message}</p>
+        </div>
+    `;
+    }
+
+    function showError(containerId, message) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = `
+        <div style="background: rgba(248, 113, 113, 0.1); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(248, 113, 113, 0.2); text-align: center;">
+            <i class="fas fa-exclamation-triangle" style="color: #f87171; font-size: 2rem; margin-bottom: 1rem;"></i>
+            <p style="color: var(--text-secondary);">${message}</p>
+            <button onclick="loadAllPosts()" style="background: var(--accent-color); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; margin-top: 1rem;">
+                Try Again
+            </button>
+        </div>
+    `;
+    }
+
+    function showResponse(elementId, message, type) {
+        const element = document.getElementById(elementId);
+        const colors = {
+            success: '#48bb78',
+            error: '#f87171',
+            loading: '#38b2ac',
+            warning: '#ed8936',
+            info: '#4299e1'
+        };
+
+        const icons = {
+            success: 'check-circle',
+            error: 'exclamation-circle',
+            loading: 'spinner fa-spin',
+            warning: 'exclamation-triangle',
+            info: 'info-circle'
+        };
+
+        element.innerHTML = `
+        <div style="background: rgba(${getRgb(colors[type])}, 0.1); padding: 1rem; border-radius: 8px; border: 1px solid rgba(${getRgb(colors[type])}, 0.2); display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-${icons[type]}" style="color: ${colors[type]};"></i>
+            <span style="color: var(--text-primary);">${message}</span>
+        </div>
+    `;
+    }
+
+    function getRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ?
+            `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+            : '56, 178, 172';
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .action-btn {
+        transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .post-card {
+        transition: all 0.3s ease;
+    }
+
+    .post-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+`;
+    document.head.appendChild(style);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadAllPosts();
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        navLinks.forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>

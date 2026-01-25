@@ -1,0 +1,32 @@
+{
+  "name": "studyconnect",
+  "version": "2.0.0",
+  "private": true,
+  "description": "A social network platform for connecting students with full CRUD interface",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "social-network",
+    "students",
+    "express",
+    "mongodb",
+    "crud",
+    "deployment"
+  ],
+  "author": "SE2425Backenders",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "mongodb": "^6.10.0",
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

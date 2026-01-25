@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="padding: 100px 2rem; text-align: center;">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div style="font-size: 8rem; color: var(--accent-color); margin-bottom: 2rem;">
+                404
+            </div>
+
+            <h1 style="font-size: 3rem; margin-bottom: 1.5rem;">Page Not Found</h1>
+
+            <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 3rem; line-height: 1.6;">
+                Oops! It seems you've ventured into uncharted territory. The page you're looking for might have been moved, deleted, or never existed.
+            </p>
+
+            <div style="background: var(--card-bg); padding: 2rem; border-radius: var(--border-radius); border: 1px solid var(--card-border); margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">What can you do?</h3>
+                <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                        <i class="fas fa-check" style="position: absolute; left: 0; color: var(--accent-color);"></i>
+                        Double-check the URL for typos
+                    </li>
+                    <li style="margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative;">
+                        <i class="fas fa-check" style="position: absolute; left: 0; color: var(--accent-color);"></i>
+                        Use the navigation above to find your way
+                    </li>
+                    <li style="padding-left: 1.5rem; position: relative;">
+                        <i class="fas fa-check" style="position: absolute; left: 0; color: var(--accent-color);"></i>
+                        Contact us if you believe this is an error
+                    </li>
+                </ul>
+            </div>
+
+            <div class="cta-buttons" style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                <a href="/" class="cta-button primary" style="text-decoration: none;">
+                    <i class="fas fa-home"></i> Return to Home
+                </a>
+                <a href="/contact" class="cta-button secondary" style="text-decoration: none;">
+                    <i class="fas fa-envelope"></i> Contact Support
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 StudyConnect - Social Network for Students</p>
+    </footer>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        const currentPath = window.location.pathname;
+
+        const loggedInPages = ['/search', '/api-docs', '/login'];
+        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
+
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            if (shouldShowLoggedIn) {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
+                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
+                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                `;
+
+                if (!isLoggedIn && currentPath !== '/login') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                }
+            } else {
+                nav.innerHTML = `
+                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                `;
+            }
+        }
+    });
+
+    function logout() {
+        sessionStorage.removeItem('isLoggedIn');
+    }
+</script>
+</body>
+</html>
