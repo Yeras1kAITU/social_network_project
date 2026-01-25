@@ -322,13 +322,22 @@ app.post('/api/posts', async (req, res) => {
         }
 
         const collection = await ensurePostsCollection();
-        const lastPost = await collection
+        const lastPost = await postsCollection
             .find()
             .sort({ postId: -1 })
             .limit(1)
             .toArray();
 
-        const nextPostId = lastPost.length > 0 ? lastPost[0].postId + 1 : 1;
+        let nextPostId = 1;
+
+        if (lastPost.length > 0 && lastPost[0].postId) {
+            nextPostId = lastPost[0].postId + 1;
+        } else {
+            const allPosts = await postsCollection.find().toArray();
+            if (allPosts.length > 0) {
+                nextPostId = allPosts.length + 1;
+            }
+        }
 
         const newPost = {
             postId: nextPostId,
@@ -341,6 +350,7 @@ app.post('/api/posts', async (req, res) => {
             updated_at: new Date(),
             is_published: true
         };
+
 
         const result = await collection.insertOne(newPost);
 
