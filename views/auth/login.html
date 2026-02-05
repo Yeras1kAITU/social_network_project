@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 0 20px;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--card-border);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .auth-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .auth-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .auth-tab.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--dark-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.1);
+        }
+
+        .form-input:invalid:focus {
+            border-color: #f87171;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .error-message {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            color: #f87171;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid rgba(72, 187, 120, 0.2);
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            display: none;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn-auth:hover {
+            background: #38b2ac;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-auth:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/auth/login" class="active"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1 class="auth-title">Welcome Back</h1>
+
+                <div id="errorMessage" class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText"></span>
+                </div>
+
+                <div id="successMessage" class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="successText"></span>
+                </div>
+
+                <div class="auth-tabs">
+                    <a href="/auth/login" class="auth-tab active">Login</a>
+                    <a href="/auth/register" class="auth-tab">Register</a>
+                </div>
+
+                <form id="loginForm" action="/auth/login" method="POST">
+                    <div class="form-group">
+                        <label for="emailOrUsername" class="form-label">
+                            <i class="fas fa-user"></i> Email or Username
+                        </label>
+                        <input
+                                type="text"
+                                id="emailOrUsername"
+                                name="emailOrUsername"
+                                class="form-input"
+                                required
+                                placeholder="Enter your email or username"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <div class="password-wrapper">
+                            <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-input"
+                                    required
+                                    placeholder="Enter your password"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="text-align: right;">
+                        <a href="#" style="color: var(--accent-color); text-decoration: none; font-size: 0.9rem;">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <button type="submit" class="btn-auth">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="/auth/register">Create one</a></p>
+                    <p>By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 StudyConnect - Student Social Network</p>
+        <p>Secure authentication system</p>
+    </footer>
+</div>
+
+<script>
+    // Check for error/success messages from server
+    document.addEventListener('DOMContentLoaded', function() {
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const errorText = document.getElementById('errorText');
+        const successText = document.getElementById('successText');
+
+        // Check URL for error/success parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const success = urlParams.get('success');
+
+        if (error) {
+            errorText.textContent = decodeURIComponent(error);
+            errorMessage.style.display = 'flex';
+        }
+
+        if (success) {
+            successText.textContent = decodeURIComponent(success);
+            successMessage.style.display = 'flex';
+        }
+
+        // Check if we have authData from server
+        if (window.authData) {
+            if (window.authData.error) {
+                errorText.textContent = window.authData.error;
+                errorMessage.style.display = 'flex';
+            }
+            if (window.authData.success) {
+                successText.textContent = window.authData.success;
+                successMessage.style.display = 'flex';
+            }
+        }
+    });
+
+    function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        const toggle = field.nextElementSibling;
+        const icon = toggle.querySelector('i');
+
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+        submitBtn.disabled = true;
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            const currentPath = window.location.pathname;
+            const links = nav.querySelectorAll('a');
+
+            links.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

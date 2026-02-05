@@ -17,9 +17,10 @@
         <nav>
             <ul class="nav-links">
                 <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/about" class="active"><i class="fas fa-info-circle"></i> About</a></li>
                 <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
-                <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                <li><a href="/auth/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/auth/register"><i class="fas fa-user-plus"></i> Register</a></li>
             </ul>
         </nav>
     </header>
@@ -144,44 +145,6 @@
             }
         });
     });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
-        const currentPath = window.location.pathname;
-
-        const loggedInPages = ['/search', '/api-docs', '/login'];
-        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
-
-        const nav = document.querySelector('.nav-links');
-        if (nav) {
-            if (shouldShowLoggedIn) {
-                nav.innerHTML = `
-                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
-                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
-                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
-                `;
-
-                if (!isLoggedIn && currentPath !== '/login') {
-                    sessionStorage.setItem('isLoggedIn', 'true');
-                }
-            } else {
-                nav.innerHTML = `
-                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
-                `;
-            }
-        }
-    });
-
-    function logout() {
-        sessionStorage.removeItem('isLoggedIn');
-    }
 </script>
 </body>
 </html>

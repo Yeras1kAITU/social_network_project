@@ -21,7 +21,8 @@
                 <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
                 <li><a href="/search"><i class="fas fa-search"></i> Search</a></li>
                 <li><a href="/crud" class="active"><i class="fas fa-database"></i> CRUD</a></li>
-                <li><a href="/logout" class="btn-exit"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                <li><a href="/auth/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/auth/register"><i class="fas fa-user-plus"></i> Register</a></li>
             </ul>
         </nav>
     </header>
@@ -247,16 +248,44 @@
 </div>
 
 <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if(targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+
+<script>
     async function loadAllPosts() {
         try {
             showLoading('postsContainer', 'Loading posts...');
             const response = await fetch('/api/posts');
+
+            // Check if response is JSON
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                // Got HTML instead of JSON
+                const text = await response.text();
+                console.error('Got HTML instead of JSON:', text.substring(0, 200));
+                throw new Error('Server returned HTML instead of JSON. Check server logs.');
+            }
+
             const result = await response.json();
 
             if (result.success) {
                 displayPosts(result.data);
             } else {
-                showError('postsContainer', 'Failed to load posts: ' + result.error);
+                showError('postsContainer', 'Failed to load posts: ' + (result.error || 'Unknown error'));
             }
         } catch (error) {
             showError('postsContainer', 'Error loading posts: ' + error.message);
@@ -634,19 +663,6 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         loadAllPosts();
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll('.nav-links a');
-
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            }
-        });
     });
 </script>
 </body>

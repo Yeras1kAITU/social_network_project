@@ -133,41 +133,30 @@ class MongoDBManager {
 
     getCollection(name) {
         if (!this.db) {
-            console.log(`Database not connected. Returning mock collection: ${name}`);
+            console.log(`⚠️ Database not connected yet for collection: ${name}`);
+            console.log(`⚠️ This should not happen after initialization.`);
 
             return {
-                find: (query = {}) => ({
-                    toArray: async () => {
-                        console.log(`Mock: find.toArray() called for ${name}`);
-                        return [];
-                    },
-                    sort: function(sortBy) {
-                        console.log(`Mock: sort() called`);
-                        return this;
-                    },
-                    skip: function(offset) {
-                        console.log(`Mock: skip(${offset}) called`);
-                        return this;
-                    },
-                    limit: function(limit) {
-                        console.log(`Mock: limit(${limit}) called`);
-                        return this;
-                    },
-                    project: function(projection) {
-                        console.log(`Mock: project() called`);
-                        return this;
+                find: async (query = {}) => {
+                    console.log(`⚠️ Attempting to use collection ${name} before DB connection`);
+                    if (!this.db) {
+                        throw new Error(`Database not connected for collection: ${name}`);
                     }
-                }),
+                    return this.db.collection(name).find(query);
+                },
                 findOne: async (query = {}) => {
-                    console.log(`Mock: findOne() called for ${name}`);
-                    return null;
+                    console.log(`Attempting to use collection ${name} before DB connection`);
+                    if (!this.db) {
+                        throw new Error(`Database not connected for collection: ${name}`);
+                    }
+                    return this.db.collection(name).findOne(query);
                 },
                 insertOne: async (document) => {
-                    console.log(`Mock: insertOne() called for ${name}`);
-                    return {
-                        insertedId: 'mock-id-' + Date.now(),
-                        acknowledged: true
-                    };
+                    console.log(`Attempting to use collection ${name} before DB connection`);
+                    if (!this.db) {
+                        throw new Error(`Database not connected for collection: ${name}`);
+                    }
+                    return this.db.collection(name).insertOne(document);
                 },
                 insertMany: async (documents) => {
                     console.log(`Mock: insertMany() called for ${name}`);

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--card-border);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), #4299e1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-info h1 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-primary);
+        }
+
+        .profile-role {
+            display: inline-block;
+            background: rgba(56, 178, 172, 0.2);
+            color: var(--accent-color);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(56, 178, 172, 0.3);
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0.5rem;
+        }
+
+        .profile-tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: var(--transition);
+        }
+
+        .profile-tab:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .profile-tab.active {
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+            background: rgba(56, 178, 172, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--card-border);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-card h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--dark-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--dark-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .btn-save {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-save:hover {
+            background: #38b2ac;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-save:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .alert-success {
+            background: rgba(72, 187, 120, 0.1);
+            border: 1px solid rgba(72, 187, 120, 0.2);
+            color: var(--success-color);
+        }
+
+        .alert-error {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            color: #f87171;
+        }
+
+        .danger-zone {
+            background: rgba(248, 113, 113, 0.05);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            border-left: 4px solid #f87171;
+        }
+
+        .danger-zone h3 {
+            color: #f87171;
+        }
+
+        .btn-danger {
+            background: #f87171;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+        }
+
+        .user-posts {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .post-item {
+            background: var(--dark-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .post-title {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-primary);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/search"><i class="fas fa-search"></i> Search</a></li>
+                <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
+                <li><a href="/auth/profile" class="active"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="/auth/logout" class="btn-exit"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <% if (success) { %>
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
+                <%= success %>
+            </div>
+            <% } %>
+
+            <% if (error) { %>
+            <div class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <%= error %>
+            </div>
+            <% } %>
+
+            <div class="profile-header">
+                <div class="avatar-large">
+                    <%= user.name.charAt(0).toUpperCase() %>
+                </div>
+                <div class="profile-info">
+                    <h1><%= user.name %></h1>
+                    <span class="profile-role">
+                        <i class="fas fa-user-graduate"></i>
+                        <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %>
+                    </span>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        <i class="fas fa-envelope"></i> <%= user.email %> ·
+                        <i class="fas fa-at"></i> @<%= user.username %> ·
+                        <i class="fas fa-calendar"></i> Member since <%= new Date(user.createdAt).toLocaleDateString() %>
+                    </p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Posts</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Study Groups</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Connections</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-tabs">
+                <button class="profile-tab active" onclick="switchTab('edit-profile')">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button>
+                <button class="profile-tab" onclick="switchTab('security')">
+                    <i class="fas fa-shield-alt"></i> Security
+                </button>
+                <button class="profile-tab" onclick="switchTab('activity')">
+                    <i class="fas fa-history"></i> Activity
+                </button>
+                <button class="profile-tab" onclick="switchTab('settings')">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+            </div>
+
+            <!-- Edit Profile Tab -->
+            <div id="edit-profile" class="tab-content active">
+                <div class="profile-card">
+                    <h3>Personal Information</h3>
+                    <form id="profileForm" onsubmit="updateProfile(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-input" id="name"
+                                       value="<%= user.name %>" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" value="<%= user.email %>" disabled
+                                       style="background: rgba(255,255,255,0.1);">
+                                <small style="color: var(--text-muted); font-size: 0.8rem;">
+                                    Contact support to change email
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">University</label>
+                                <input type="text" class="form-input" id="university"
+                                       value="<%= user.profile?.university || '' %>"
+                                       placeholder="Your university">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Major/Field of Study</label>
+                                <input type="text" class="form-input" id="major"
+                                       value="<%= user.profile?.major || '' %>"
+                                       placeholder="Your major">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Year of Study</label>
+                                <select class="form-input" id="year">
+                                    <option value="">Select year</option>
+                                    <option value="Freshman" <%= user.profile?.year === 'Freshman' ? 'selected' : '' %>>Freshman</option>
+                                    <option value="Sophomore" <%= user.profile?.year === 'Sophomore' ? 'selected' : '' %>>Sophomore</option>
+                                    <option value="Junior" <%= user.profile?.year === 'Junior' ? 'selected' : '' %>>Junior</option>
+                                    <option value="Senior" <%= user.profile?.year === 'Senior' ? 'selected' : '' %>>Senior</option>
+                                    <option value="Graduate" <%= user.profile?.year === 'Graduate' ? 'selected' : '' %>>Graduate</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Bio</label>
+                            <textarea class="form-textarea" id="bio" rows="4"
+                                      placeholder="Tell others about yourself..."><%= user.profile?.bio || '' %></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-save" id="saveProfileBtn">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Security Tab -->
+            <div id="security" class="tab-content">
+                <div class="profile-card">
+                    <h3>Change Password</h3>
+                    <form id="passwordForm" onsubmit="changePassword(event)">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-input" id="currentPassword" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-input" id="newPassword" required minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-input" id="confirmNewPassword" required minlength="6">
+                            </div>
+                        </div>
+
+                        <div id="passwordError" class="alert alert-error" style="display: none;"></div>
+                        <div id="passwordSuccess" class="alert alert-success" style="display: none;"></div>
+
+                        <button type="submit" class="btn-save" id="savePasswordBtn">
+                            <i class="fas fa-key"></i> Change Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Activity Tab -->
+            <div id="activity" class="tab-content">
+                <div class="profile-card">
+                    <h3>Recent Activity</h3>
+                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
+                        <i class="fas fa-history" style="font-size: 3rem; margin-bottom: 1rem; display: block; color: var(--text-muted);"></i>
+                        No recent activity
+                    </p>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content">
+                <div class="profile-card">
+                    <h3>Account Settings</h3>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                            <input type="checkbox" id="emailNotifications" checked>
+                            <span style="color: var(--text-primary);">Email notifications</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Theme Preference</label>
+                        <select class="form-input" id="theme">
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
+                            <option value="auto">Auto (System)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-save" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                </div>
+
+                <div class="profile-card danger-zone">
+                    <h3>Danger Zone</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        Once you delete your account, there is no going back. Please be certain.
+                    </p>
+                    <button class="btn-danger" onclick="deleteAccount()">
+                        <i class="fas fa-trash"></i> Delete My Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 StudyConnect - Student Social Network</p>
+        <p>Profile Management System</p>
+    </footer>
+</div>
+
+<script>
+    function switchTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        // Remove active class from all tab buttons
+        document.querySelectorAll('.profile-tab').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        // Show selected tab
+        document.getElementById(tabName).classList.add('active');
+
+        // Set active class on clicked button
+        event.target.classList.add('active');
+    }
+
+    async function updateProfile(e) {
+        e.preventDefault();
+
+        const btn = document.getElementById('saveProfileBtn');
+        const originalText = btn.innerHTML;
+
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/auth/profile/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: document.getElementById('name').value,
+                    bio: document.getElementById('bio').value,
+                    university: document.getElementById('university').value,
+                    major: document.getElementById('major').value,
+                    year: document.getElementById('year').value
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Reload page to show success message
+                window.location.reload();
+            } else {
+                alert('Error: ' + result.error);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        } catch (error) {
+            alert('Error updating profile: ' + error.message);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    async function changePassword(e) {
+        e.preventDefault();
+
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+
+        const errorDiv = document.getElementById('passwordError');
+        const successDiv = document.getElementById('passwordSuccess');
+
+        // Reset messages
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+
+        // Validation
+        if (newPassword !== confirmNewPassword) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> New passwords do not match';
+            errorDiv.style.display = 'flex';
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> New password must be at least 6 characters';
+            errorDiv.style.display = 'flex';
+            return;
+        }
+
+        const btn = document.getElementById('savePasswordBtn');
+        const originalText = btn.innerHTML;
+
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Changing...';
+        btn.disabled = true;
+
+        try {
+            const response = await fetch('/auth/profile/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    currentPassword,
+                    newPassword,
+                    confirmPassword: confirmNewPassword
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                successDiv.innerHTML = '<i class="fas fa-check-circle"></i> Password changed successfully';
+                successDiv.style.display = 'flex';
+
+                // Clear form
+                document.getElementById('passwordForm').reset();
+
+                // Reload page after 2 seconds
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + result.error;
+                errorDiv.style.display = 'flex';
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        } catch (error) {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error: ' + error.message;
+            errorDiv.style.display = 'flex';
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
+
+    function saveSettings() {
+        alert('Settings saved!');
+    }
+
+    function deleteAccount() {
+        if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+            alert('Account deletion would be processed here. This is a demo.');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            const currentPath = window.location.pathname;
+            const links = nav.querySelectorAll('a');
+
+            links.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

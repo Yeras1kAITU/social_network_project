@@ -19,6 +19,8 @@
                 <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
                 <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/auth/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/auth/register"><i class="fas fa-user-plus"></i> Register</a></li>
             </ul>
         </nav>
     </header>
@@ -70,33 +72,33 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
         const currentPath = window.location.pathname;
-
-        const loggedInPages = ['/search', '/api-docs', '/login'];
-        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
-
         const nav = document.querySelector('.nav-links');
+
         if (nav) {
-            if (shouldShowLoggedIn) {
+            // Check if user is authenticated via session
+            const isAuthenticated = <%= isAuthenticated ? 'true' : 'false' %>;
+            const userRole = '<%= user ? user.role : "" %>';
+
+            if (isAuthenticated) {
                 nav.innerHTML = `
                     <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
                     <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
                     <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
                     <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
-                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
-                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
+                    <li><a href="/crud" ${currentPath === '/crud' ? 'class="active"' : ''}><i class="fas fa-database"></i> CRUD</a></li>
+                    <li><a href="/api-docs" ${currentPath === '/api-docs' ? 'class="active"' : ''}><i class="fas fa-code"></i> API Docs</a></li>
+                    <li><a href="/auth/profile" ${currentPath === '/auth/profile' ? 'class="active"' : ''}><i class="fas fa-user"></i> Profile</a></li>
+                    ${userRole === 'admin' ? '<li><a href="/admin"><i class="fas fa-cog"></i> Admin</a></li>' : ''}
+                    <li><a href="/auth/logout" class="btn-exit"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 `;
-
-                if (!isLoggedIn && currentPath !== '/login') {
-                    sessionStorage.setItem('isLoggedIn', 'true');
-                }
             } else {
                 nav.innerHTML = `
                     <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
                     <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
                     <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                    <li><a href="/auth/login" ${currentPath === '/auth/login' ? 'class="active"' : ''}><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="/auth/register" ${currentPath === '/auth/register' ? 'class="active"' : ''}><i class="fas fa-user-plus"></i> Register</a></li>
                 `;
             }
         }

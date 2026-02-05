@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - StudyConnect</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Same styles as login page, plus password strength styles */
+        .auth-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .auth-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--card-border);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .auth-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+
+        .auth-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .auth-tab.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--dark-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(56, 178, 172, 0.1);
+        }
+
+        .form-input:invalid:focus {
+            border-color: #f87171;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .error-message {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            color: #f87171;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            display: none;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .auth-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn-auth:hover {
+            background: #38b2ac;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-auth:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--dark-bg);
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .strength-weak { background: #f87171; width: 33%; }
+        .strength-medium { background: #ed8936; width: 66%; }
+        .strength-strong { background: #48bb78; width: 100%; }
+
+        .password-hints {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .hint {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .hint.valid {
+            color: var(--success-color);
+        }
+
+        .hint.invalid {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="main-header">
+        <div class="logo">StudyConnect</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/auth/register" class="active"><i class="fas fa-user-plus"></i> Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1 class="auth-title">Join StudyConnect</h1>
+
+                <div id="errorMessage" class="error-message">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorText"></span>
+                </div>
+
+                <div class="auth-tabs">
+                    <a href="/auth/login" class="auth-tab">Login</a>
+                    <a href="/auth/register" class="auth-tab active">Register</a>
+                </div>
+
+                <form id="registerForm" action="/auth/register" method="POST">
+                    <div class="form-group">
+                        <label for="name" class="form-label">
+                            <i class="fas fa-user"></i> Full Name *
+                        </label>
+                        <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="form-input"
+                                required
+                                placeholder="Enter your full name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope"></i> Email Address *
+                        </label>
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-input"
+                                required
+                                placeholder="Enter your email address"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-at"></i> Username *
+                        </label>
+                        <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                class="form-input"
+                                required
+                                placeholder="Choose a username"
+                        >
+                        <small style="color: var(--text-muted); font-size: 0.8rem;">
+                            Must be unique, 3-20 characters, letters, numbers, and underscores only
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i> Password *
+                        </label>
+                        <div class="password-wrapper">
+                            <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-input"
+                                    required
+                                    placeholder="Create a strong password"
+                                    minlength="6"
+                                    oninput="checkPasswordStrength()"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength">
+                            <div id="strengthBar" class="strength-bar"></div>
+                        </div>
+                        <div id="passwordHints" class="password-hints">
+                            <div class="hint invalid" id="lengthHint">
+                                <i class="fas fa-circle"></i> At least 6 characters
+                            </div>
+                            <div class="hint invalid" id="lowercaseHint">
+                                <i class="fas fa-circle"></i> One lowercase letter
+                            </div>
+                            <div class="hint invalid" id="uppercaseHint">
+                                <i class="fas fa-circle"></i> One uppercase letter
+                            </div>
+                            <div class="hint invalid" id="numberHint">
+                                <i class="fas fa-circle"></i> One number
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">
+                            <i class="fas fa-lock"></i> Confirm Password *
+                        </label>
+                        <div class="password-wrapper">
+                            <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    class="form-input"
+                                    required
+                                    placeholder="Confirm your password"
+                                    minlength="6"
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div id="passwordMatch" style="margin-top: 0.5rem; font-size: 0.8rem; display: none;">
+                            <i class="fas fa-check-circle" style="color: var(--success-color);"></i>
+                            <span>Passwords match</span>
+                        </div>
+                        <div id="passwordMismatch" style="margin-top: 0.5rem; font-size: 0.8rem; display: none;">
+                            <i class="fas fa-times-circle" style="color: #f87171;"></i>
+                            <span>Passwords do not match</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label style="display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="terms" name="terms" required style="margin-top: 0.25rem;">
+                            <span style="color: var(--text-secondary); font-size: 0.9rem;">
+                                I agree to the <a href="#" style="color: var(--accent-color);">Terms of Service</a>
+                                and <a href="#" style="color: var(--accent-color);">Privacy Policy</a>
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-auth" id="submitBtn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="/auth/login">Sign in</a></p>
+                    <p>By creating an account, you join our community of students</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 StudyConnect - Student Social Network</p>
+        <p>Join thousands of students sharing knowledge</p>
+    </footer>
+</div>
+
+<script>
+    // Check for error message from server
+    document.addEventListener('DOMContentLoaded', function() {
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+
+        // Check URL for error parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+
+        if (error) {
+            errorText.textContent = decodeURIComponent(error);
+            errorMessage.style.display = 'flex';
+        }
+
+        // Check if we have authData from server
+        if (window.authData) {
+            if (window.authData.error) {
+                errorText.textContent = window.authData.error;
+                errorMessage.style.display = 'flex';
+            }
+
+            // Pre-fill form data if available
+            if (window.authData.formData) {
+                if (window.authData.formData.name) {
+                    document.getElementById('name').value = window.authData.formData.name;
+                }
+                if (window.authData.formData.email) {
+                    document.getElementById('email').value = window.authData.formData.email;
+                }
+                if (window.authData.formData.username) {
+                    document.getElementById('username').value = window.authData.formData.username;
+                }
+            }
+        }
+    });
+
+    function togglePassword(fieldId) {
+        const field = document.getElementById(fieldId);
+        const toggle = field.parentElement.querySelector('.password-toggle');
+        const icon = toggle.querySelector('i');
+
+        if (field.type === 'password') {
+            field.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            field.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    function checkPasswordStrength() {
+        const password = document.getElementById('password').value;
+        const strengthBar = document.getElementById('strengthBar');
+        const hints = {
+            length: document.getElementById('lengthHint'),
+            lowercase: document.getElementById('lowercaseHint'),
+            uppercase: document.getElementById('uppercaseHint'),
+            number: document.getElementById('numberHint')
+        };
+
+        // Reset
+        strengthBar.className = 'strength-bar';
+        Object.values(hints).forEach(hint => {
+            hint.className = 'hint invalid';
+            hint.querySelector('i').className = 'fas fa-circle';
+        });
+
+        let strength = 0;
+
+        // Check length
+        if (password.length >= 6) {
+            hints.length.className = 'hint valid';
+            hints.length.querySelector('i').className = 'fas fa-check-circle';
+            strength++;
+        }
+
+        // Check lowercase
+        if (/[a-z]/.test(password)) {
+            hints.lowercase.className = 'hint valid';
+            hints.lowercase.querySelector('i').className = 'fas fa-check-circle';
+            strength++;
+        }
+
+        // Check uppercase
+        if (/[A-Z]/.test(password)) {
+            hints.uppercase.className = 'hint valid';
+            hints.uppercase.querySelector('i').className = 'fas fa-check-circle';
+            strength++;
+        }
+
+        // Check number
+        if (/[0-9]/.test(password)) {
+            hints.number.className = 'hint valid';
+            hints.number.querySelector('i').className = 'fas fa-check-circle';
+            strength++;
+        }
+
+        // Update strength bar
+        if (strength === 0) {
+            strengthBar.className = 'strength-bar';
+        } else if (strength <= 2) {
+            strengthBar.className = 'strength-bar strength-weak';
+        } else if (strength === 3) {
+            strengthBar.className = 'strength-bar strength-medium';
+        } else {
+            strengthBar.className = 'strength-bar strength-strong';
+        }
+
+        // Check password match
+        checkPasswordMatch();
+    }
+
+    function checkPasswordMatch() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const matchDiv = document.getElementById('passwordMatch');
+        const mismatchDiv = document.getElementById('passwordMismatch');
+
+        if (confirmPassword.length === 0) {
+            matchDiv.style.display = 'none';
+            mismatchDiv.style.display = 'none';
+            return;
+        }
+
+        if (password === confirmPassword) {
+            matchDiv.style.display = 'flex';
+            mismatchDiv.style.display = 'none';
+        } else {
+            matchDiv.style.display = 'none';
+            mismatchDiv.style.display = 'flex';
+        }
+    }
+
+    document.getElementById('confirmPassword').addEventListener('input', checkPasswordMatch);
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const terms = document.getElementById('terms').checked;
+
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            alert('Passwords do not match!');
+            return;
+        }
+
+        if (!terms) {
+            e.preventDefault();
+            alert('You must agree to the Terms of Service and Privacy Policy');
+            return;
+        }
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+        submitBtn.disabled = true;
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.querySelector('.nav-links');
+        if (nav) {
+            const currentPath = window.location.pathname;
+            const links = nav.querySelectorAll('a');
+
+            links.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

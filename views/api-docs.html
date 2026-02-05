@@ -19,7 +19,8 @@
                 <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
                 <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
-                <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
+                <li><a href="/auth/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/auth/register"><i class="fas fa-user-plus"></i> Register</a></li>
             </ul>
         </nav>
     </header>
@@ -42,10 +43,10 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
                         <div>
                             <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">Database</h3>
-                            <p style="color: var(--text-secondary);">SQLite (studyconnect.db)</p>
+                            <p style="color: var(--text-secondary);">MongoDB (studyconnect database)</p>
                         </div>
                         <div>
-                            <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">Table</h3>
+                            <h3 style="color: var(--accent-color); margin-bottom: 0.5rem;">Collection</h3>
                             <p style="color: var(--text-secondary);">posts</p>
                         </div>
                         <div>
@@ -55,19 +56,20 @@
                     </div>
 
                     <div style="margin-top: 1.5rem; background: var(--dark-bg); padding: 1.5rem; border-radius: 8px;">
-                        <h4 style="margin-bottom: 1rem;">Table Schema</h4>
+                        <h4 style="margin-bottom: 1rem;">Document Schema</h4>
                         <pre style="color: var(--text-secondary); font-family: monospace; overflow: auto; font-size: 0.9rem;">
-CREATE TABLE posts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    content TEXT NOT NULL,
-    author TEXT NOT NULL,
-    category TEXT DEFAULT 'general',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    likes INTEGER DEFAULT 0,
-    is_published BOOLEAN DEFAULT 1
-)</pre>
+{
+    _id: ObjectId,
+    postId: Number,
+    title: String,
+    content: String,
+    author: String,
+    category: String,
+    created_at: Date,
+    updated_at: Date,
+    likes: Number,
+    is_published: Boolean
+}</pre>
                     </div>
                 </div>
 
@@ -91,6 +93,51 @@ CREATE TABLE posts (
                         <a href="/api/posts" class="cta-button secondary" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
                             Test Endpoint
                         </a>
+                    </div>
+
+                    <div class="endpoint-card" style="border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <span style="background: #3b82f6; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-weight: 600; font-size: 0.9rem;">
+                                POST
+                            </span>
+                            <code style="background: var(--dark-bg); padding: 0.5rem 1rem; border-radius: 4px; font-size: 1rem;">
+                                /api/posts
+                            </code>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            Create a new post. Requires authentication.
+                        </p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">
+                            Body: {"title": "string", "content": "string", "author": "string", "category": "string"}
+                        </p>
+                    </div>
+
+                    <div class="endpoint-card" style="border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <span style="background: #f59e0b; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-weight: 600; font-size: 0.9rem;">
+                                PUT
+                            </span>
+                            <code style="background: var(--dark-bg); padding: 0.5rem 1rem; border-radius: 4px; font-size: 1rem;">
+                                /api/posts/:id
+                            </code>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            Update an existing post. Requires authentication.
+                        </p>
+                    </div>
+
+                    <div class="endpoint-card" style="border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <span style="background: #ef4444; color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-weight: 600; font-size: 0.9rem;">
+                                DELETE
+                            </span>
+                            <code style="background: var(--dark-bg); padding: 0.5rem 1rem; border-radius: 4px; font-size: 1rem;">
+                                /api/posts/:id
+                            </code>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                            Delete a post (soft delete). Requires authentication.
+                        </p>
                     </div>
                 </div>
 
@@ -124,6 +171,27 @@ CREATE TABLE posts (
                             <p style="color: var(--text-secondary); font-size: 0.9rem;">View post stats</p>
                         </a>
                     </div>
+
+                    <div style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+                        <h4 style="color: var(--accent-color); margin-bottom: 1rem;">
+                            <i class="fas fa-terminal"></i> API Examples with curl
+                        </h4>
+                        <pre style="color: var(--text-secondary); font-family: monospace; font-size: 0.9rem; overflow: auto;">
+# Get all posts
+curl http://localhost:3000/api/posts
+
+# Get post with ID 1
+curl http://localhost:3000/api/posts/1
+
+# Get categories
+curl http://localhost:3000/api/posts/categories
+
+# Get statistics
+curl http://localhost:3000/api/posts/stats
+
+# Health check
+curl http://localhost:3000/api/health</pre>
+                    </div>
                 </div>
             </div>
         </section>
@@ -134,57 +202,5 @@ CREATE TABLE posts (
         <p>Database: MongoDB | Created for Backend Development Course</p>
     </footer>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentPath = window.location.pathname;
-        const navLinks = document.querySelectorAll('.nav-links a');
-
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            }
-        });
-    });
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
-        const currentPath = window.location.pathname;
-
-        const loggedInPages = ['/search', '/api-docs', '/login'];
-        const shouldShowLoggedIn = loggedInPages.includes(currentPath) || isLoggedIn;
-
-        const nav = document.querySelector('.nav-links');
-        if (nav) {
-            if (shouldShowLoggedIn) {
-                nav.innerHTML = `
-                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li><a href="/search" ${currentPath === '/search' ? 'class="active"' : ''}><i class="fas fa-search"></i> Search</a></li>
-                    <li><a href="/crud"><i class="fas fa-database"></i> CRUD</a></li>
-                    <li><a href="/api-docs" ${currentPath === '/api-docs' ? 'class="active"' : ''}><i class="fas fa-code"></i> API Docs</a></li>
-                    <li><a href="/" class="btn-exit" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Exit</a></li>
-                `;
-
-                if (!isLoggedIn && currentPath !== '/login') {
-                    sessionStorage.setItem('isLoggedIn', 'true');
-                }
-            } else {
-                nav.innerHTML = `
-                    <li><a href="/" ${currentPath === '/' ? 'class="active"' : ''}><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/about" ${currentPath === '/about' ? 'class="active"' : ''}><i class="fas fa-info-circle"></i> About</a></li>
-                    <li><a href="/contact" ${currentPath === '/contact' ? 'class="active"' : ''}><i class="fas fa-envelope"></i> Contact</a></li>
-                    <li><a href="/login" class="btn-placeholder"><i class="fas fa-user-plus"></i> Log in/Sign in</a></li>
-                `;
-            }
-        }
-    });
-
-    function logout() {
-        sessionStorage.removeItem('isLoggedIn');
-    }
-</script>
 </body>
 </html>
